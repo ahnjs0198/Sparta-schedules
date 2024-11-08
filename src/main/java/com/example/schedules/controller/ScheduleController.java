@@ -47,29 +47,49 @@ public class ScheduleController {
     }
 
     @GetMapping("/{id}")
-    public ScheduleResponseDto findScheduleById(@PathVariable Long id) {
+    public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable Long id) {
 
         Schedule schedule = scheduleList.get(id);
 
-        return new ScheduleResponseDto(schedule);
+        // NPE 방지
+        if (schedule == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(new ScheduleResponseDto(schedule), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ScheduleResponseDto updateScheduleById(
+    public ResponseEntity<ScheduleResponseDto> updateScheduleById(
             @PathVariable Long id,
             @RequestBody ScheduleRequestDto dto
     ) {
         Schedule schedule = scheduleList.get(id);
 
+        // NPE 방지
+        if (schedule == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // 필수값 검증
+        if (dto.getTodo() == null || dto.getWriter() == null || dto.getPassword() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         schedule.update(dto);
 
-        return new ScheduleResponseDto(schedule);
+        return new ResponseEntity<>(new ScheduleResponseDto(schedule), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSchedule(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id) {
 
-        scheduleList.remove(id);
+        if (scheduleList.containsKey(id)) {
+            scheduleList.remove(id);
 
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
