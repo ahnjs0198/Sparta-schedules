@@ -23,7 +23,13 @@ public class ScheduleController {
         Long scheduleId = scheduleList.isEmpty() ? 1 : Collections.max(scheduleList.keySet()) + 1;
 
         // 요청받은 데이터로 Schedule 객체 생성
-        Schedule schedule = new Schedule(scheduleId, dto.getTodo(), dto.getWriter(), dto.getPassword(), LocalDateTime.now(), LocalDateTime.now());
+        Schedule schedule = new Schedule(
+                scheduleId,
+                dto.getTodo(),
+                dto.getWriter(),
+                dto.getPassword(),
+                LocalDateTime.now(),
+                LocalDateTime.now());
 
         // Inmemory DB에 Schedule 저장
         scheduleList.put(scheduleId, schedule);
