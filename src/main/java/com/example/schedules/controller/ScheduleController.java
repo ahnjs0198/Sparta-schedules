@@ -48,6 +48,7 @@ public class ScheduleController {
         return new ScheduleResponseDto(schedule);
     }
 
+    @DeleteMapping("/{id}")
     public void deleteSchedule(@PathVariable Long id) {
 
         scheduleList.remove(id);
