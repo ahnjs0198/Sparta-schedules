@@ -1,7 +1,6 @@
 package com.example.schedules.entity;
 
 import com.example.schedules.dto.ScheduleRequestDto;
-import com.example.schedules.dto.ScheduleResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -18,10 +17,19 @@ public class Schedule {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public void update(ScheduleRequestDto dto) {
-        this.todo = dto.getTodo();
-        this.writer = dto.getWriter();
-        this.password = dto.getPassword();
+    public Schedule(Long id, String todo, String writer, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.todo = todo;
+        this.writer = writer;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Schedule(String todo, String writer, String password) {
+        this.todo = todo;
+        this.writer = writer;
+        this.password = password;
+        this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 }

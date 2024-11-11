@@ -10,16 +10,22 @@ public class ScheduleResponseDto {
     private Long id;
     private String todo;
     private String writer;
-    private String password;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ScheduleResponseDto(Schedule schedule) {
+    public ScheduleResponseDto(Schedule schedule){
         this.id = schedule.getId();
         this.todo = schedule.getTodo();
-        this.writer = schedule.getWriter();;
-        this.password = schedule.getPassword();
+        this.writer = schedule.getWriter();
         this.createdAt = schedule.getCreatedAt();
         this.updatedAt = schedule.getUpdatedAt();
+    }
+
+    public ScheduleResponseDto(Long id, String todo, String writer, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.todo = todo;
+        this.writer = writer;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }
